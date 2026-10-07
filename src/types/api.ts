@@ -19,6 +19,8 @@ export type CourseStatus =
   | 'REJECTED'
   | 'ARCHIVED';
 
+
+  
 export type CourseVisibility = 'PUBLIC' | 'PRIVATE' | 'UNLISTED';
 
 export type CourseLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
