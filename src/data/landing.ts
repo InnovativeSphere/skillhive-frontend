@@ -101,7 +101,9 @@ export const roles = {
 
 export const capability = {
   headline: 'How this was built',
-  body: 'SkillHive was designed before it was written. The API contract was documented before the first endpoint. The type layer was defined before the first component. The states — loading, empty, error — were considered before the happy path. Every screen you see is the end of a decision, not the beginning of one.',
+  intro: 'Most projects start with code. This one started with a question.',
+  body: 'What does it actually need to do? SkillHive was designed before it was written. The API contract was documented before the first endpoint. The type layer was defined before the first component. Loading, empty, and error states were considered before the happy path. Every screen you see is the end of a decision, not the beginning of one.',
+  closing: 'This is not a demo. This is a system.',
 } as const;
 
 export const pricing = {
@@ -192,8 +194,21 @@ export const faq = {
 export const contact = {
   headline: 'Talk to us.',
   body: 'Questions, partnerships, feedback — reach the person who built it.',
-  email: 'hello@skillhive.app', // TODO: confirm real address before launch
-  cta: { label: 'Send a message', href: 'mailto:hello@skillhive.app' },
+  channels: {
+    email: {
+      label: 'Email',
+      value: '004sas@gmail.com',
+      href: 'mailto:004sas@gmail.com',
+      description: 'Best for detailed questions.',
+    },
+    whatsapp: {
+      label: 'WhatsApp',
+      value: '09024842586',
+      href: 'https://wa.me/2349024842586',
+      description: 'Quick chat, real time.',
+    },
+  },
+  cta: { label: 'Send a message', href: '#' },
 } as const;
 
 export const finalCta = {
