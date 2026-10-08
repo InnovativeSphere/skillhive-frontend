@@ -104,3 +104,30 @@
     }
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Class-based dark mode. next-themes flips a `dark` class on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Dark token overrides — same variable names, dark values. */
+.dark {
+  --color-accent-soft: #3A2A24;
+  --color-ink: #F0EEE6;
+  --color-surface: #1F1E1D;
+  --color-canvas: #262624;
+  --color-white: #2B2A27;
+  --color-muted: #8A8A85;
+  --color-border: rgba(240, 238, 230, 0.10);
+  --color-border-strong: rgba(240, 238, 230, 0.18);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -235,3 +235,4 @@ export const footer = {
   ],
   legal: '© 2026 SkillHive. All rights reserved.',
 } as const;
+

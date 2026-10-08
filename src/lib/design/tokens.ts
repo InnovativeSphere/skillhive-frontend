@@ -107,3 +107,20 @@ export const tokens = {
 } as const;
 
 export type Tokens = typeof tokens;
+
+export const colorsDark = {
+  accent: '#D97757',
+  accentDeep: '#C2603F',
+  accentSoft: '#3A2A24',
+
+  ink: '#F0EEE6',
+
+  surface: '#1F1E1D',
+  canvas: '#262624',
+  white: '#2B2A27',
+
+  muted: '#8A8A85',
+
+  border: 'rgba(240, 238, 230, 0.10)',
+  borderStrong: 'rgba(240, 238, 230, 0.18)',
+} as const;

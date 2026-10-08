@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { CommandProvider } from '@/components/command/CommandPalette';
+import { CommandTrigger } from '@/components/command/CommandTrigger';
+import { SkipLink } from '@/components/layout/SkipLink';
 import { Providers } from './providers';
 import './globals.css';
 
@@ -31,17 +35,6 @@ export const metadata: Metadata = {
   },
   description:
     'A multi-tenant platform for skill-based education. Start an academy, sell courses, reach students anywhere.',
-  openGraph: {
-    title: 'SkillHive',
-    description: 'Start an academy. Teach anything. Reach students anywhere.',
-    type: 'website',
-    siteName: 'SkillHive',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'SkillHive',
-    description: 'Start an academy. Teach anything.',
-  },
 };
 
 export default function RootLayout({
@@ -52,11 +45,25 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+    <body>
+  <ThemeProvider
+    attribute="class"
+    defaultTheme="system"
+    enableSystem
+    disableTransitionOnChange
+  >
+    <CommandProvider>
+      <Providers>
+        <SkipLink />
+        {children}
+        <CommandTrigger />
+      </Providers>
+    </CommandProvider>
+  </ThemeProvider>
+</body>
     </html>
   );
 }
