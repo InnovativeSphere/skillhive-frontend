@@ -5,6 +5,7 @@ import { CommandProvider } from '@/components/command/CommandPalette';
 import { CommandTrigger } from '@/components/command/CommandTrigger';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { Providers } from './providers';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const inter = Inter({
@@ -61,6 +62,7 @@ export default function RootLayout({
         {children}
         <CommandTrigger />
       </Providers>
+      <Analytics />
     </CommandProvider>
   </ThemeProvider>
 </body>
