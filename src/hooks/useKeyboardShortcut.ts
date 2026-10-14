@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 type Options = {
   meta?: boolean;
@@ -15,16 +15,12 @@ export function useKeyboardShortcut(
   options: Options,
   handler: (e: KeyboardEvent) => void,
 ): void {
-  const {
-    meta,
-    shift,
-    alt,
-    preventDefault = true,
-    ignoreInputs = false,
-  } = options;
+  const { meta, shift, alt, preventDefault = true, ignoreInputs = false } = options;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // e.key can be undefined on some synthetic / IME events.
+      if (typeof e.key !== 'string') return;
       if (e.key.toLowerCase() !== key.toLowerCase()) return;
 
       const metaPressed = e.metaKey || e.ctrlKey;
@@ -35,15 +31,14 @@ export function useKeyboardShortcut(
       if (ignoreInputs) {
         const t = e.target as HTMLElement | null;
         const tag = t?.tagName;
-        if (tag === "INPUT" || tag === "TEXTAREA" || t?.isContentEditable)
-          return;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || t?.isContentEditable) return;
       }
 
       if (preventDefault) e.preventDefault();
       handler(e);
     };
 
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [key, meta, shift, alt, preventDefault, ignoreInputs, handler]);
 }

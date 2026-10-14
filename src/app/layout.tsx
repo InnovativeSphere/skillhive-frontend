@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { CommandProvider } from '@/components/command/CommandPalette';
 import { CommandTrigger } from '@/components/command/CommandTrigger';
+import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { Providers } from './providers';
-import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const inter = Inter({
@@ -49,23 +50,25 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
-    <body>
-  <ThemeProvider
-    attribute="class"
-    defaultTheme="system"
-    enableSystem
-    disableTransitionOnChange
-  >
-    <CommandProvider>
-      <Providers>
-        <SkipLink />
-        {children}
-        <CommandTrigger />
-      </Providers>
-      <Analytics />
-    </CommandProvider>
-  </ThemeProvider>
-</body>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CommandProvider>
+            <Providers>
+              <AuthProvider>
+                <SkipLink />
+                {children}
+                <CommandTrigger />
+              </AuthProvider>
+            </Providers>
+          </CommandProvider>
+        </ThemeProvider>
+        <Analytics />
+      </body>
     </html>
   );
 }
