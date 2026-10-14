@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/Label';
 import { Input } from '@/components/ui/Input';
 import { FormError } from '@/components/ui/FormError';
 import { Button } from '@/components/ui/Button';
+import { CheckCircle2 } from 'lucide-react';
 
 export function LoginForm() {
   const router = useRouter();
@@ -44,7 +45,14 @@ export function LoginForm() {
           Sign in to your academy, or continue learning.
         </p>
       </div>
-
+{searchParams.get('reset') === 'success' && (
+  <div className="mb-6 flex items-start gap-2 rounded-lg border border-accent/30 bg-accent/5 p-3">
+    <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+    <p className="text-xs text-ink">
+      Password updated. Sign in with your new password.
+    </p>
+  </div>
+)}
       <form onSubmit={onSubmit} className="mt-10 space-y-5" noValidate>
         <div>
           <Label htmlFor="usernameOrEmail">Username or email</Label>
