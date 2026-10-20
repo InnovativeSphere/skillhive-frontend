@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from '@/lib/api/baseApi';
 import authReducer from '@/store/slices/authSlice';
 import '@/lib/api/auth';
+import '@/lib/api/courses';
 
 export const store = configureStore({
   reducer: {

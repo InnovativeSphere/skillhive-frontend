@@ -508,6 +508,7 @@ export interface MyCourseListItem {
   visibility: CourseVisibility;
   isFree: boolean;
   price: number | null;
+  coverImageUrl?: string | null;
   totalLessons: number;
   totalEnrollments: number;
   averageRating: number;
