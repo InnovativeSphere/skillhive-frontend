@@ -3,6 +3,7 @@ import { baseApi } from '@/lib/api/baseApi';
 import authReducer from '@/store/slices/authSlice';
 import '@/lib/api/auth';
 import '@/lib/api/courses';
+import '@/lib/api/enrollments';
 
 export const store = configureStore({
   reducer: {

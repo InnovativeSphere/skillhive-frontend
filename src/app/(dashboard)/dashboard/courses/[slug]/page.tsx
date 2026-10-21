@@ -6,6 +6,7 @@ import { useGetCourseBySlugQuery, useSubmitCourseMutation, useArchiveCourseMutat
 import { CourseForm } from '@/components/dashboard/CourseForm';
 import { LessonList } from '@/components/dashboard/LessonList';
 import { AddLessonForm } from '@/components/dashboard/AddLessonForm';
+import { EnrollmentTable } from '@/components/dashboard/EnrollmentTable'; // <-- Import this
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -19,7 +20,8 @@ export default function EditCoursePage() {
   const [submitCourse, { isLoading: isSubmitting }] = useSubmitCourseMutation();
   const [archiveCourse, { isLoading: isArchiving }] = useArchiveCourseMutation();
 
-  const [activeTab, setActiveTab] = useState<'details' | 'lessons'>('details');
+  // Add 'students' to the tab state
+  const [activeTab, setActiveTab] = useState<'details' | 'lessons' | 'students'>('details');
 
   if (isLoading) {
     return (
@@ -103,12 +105,24 @@ export default function EditCoursePage() {
         >
           Lessons ({course.totalLessons})
         </button>
+        {/* NEW TAB */}
+        <button
+          onClick={() => setActiveTab('students')}
+          className={cn(
+            'border-b-2 px-4 py-3 text-sm font-medium transition-colors',
+            activeTab === 'students'
+              ? 'border-accent text-ink'
+              : 'border-transparent text-muted hover:text-ink',
+          )}
+        >
+          Students ({course.totalEnrollments})
+        </button>
       </div>
 
       {/* Content */}
-      {activeTab === 'details' ? (
-        <CourseForm initialData={course} />
-      ) : (
+      {activeTab === 'details' && <CourseForm initialData={course} />}
+      
+      {activeTab === 'lessons' && (
         <div className="grid gap-8 md:grid-cols-[1fr_300px]">
           <div>
             <LessonList courseSlug={course.slug} />
@@ -117,6 +131,10 @@ export default function EditCoursePage() {
             <AddLessonForm courseId={course.courseId} />
           </div>
         </div>
+      )}
+
+      {activeTab === 'students' && (
+        <EnrollmentTable courseId={course.courseId} />
       )}
     </div>
   );

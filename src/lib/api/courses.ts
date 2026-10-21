@@ -72,7 +72,7 @@ export const coursesApi = baseApi.injectEndpoints({
     // --- Lesson Queries & Mutations ---
     getLessons: b.query<Lesson[], string>({
       query: (courseSlug) => `/courses/${courseSlug}/lessons`,
-      providesTags: (_, __, slug) => [{ type: 'Lesson', id: slug }],
+      providesTags: (_, __, slug) => ['Lesson'],
     }),
 
      createLesson: b.mutation<void, { courseId: number; body: CreateLessonDto }>({
