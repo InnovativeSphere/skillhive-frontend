@@ -589,6 +589,8 @@ export interface Lesson {
   lessonId: number;
   title: string;
   description: string | null;
+  content: string | null;   
+  videoUrl: string | null;  
   order: number;
   durationMinutes: number | null;
   isPreview: boolean;
