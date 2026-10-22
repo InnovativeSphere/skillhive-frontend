@@ -58,6 +58,6 @@ Every pixel, animation, and component was built with intention. No bloated UI li
 
 Built by Salim Sambo
 
-text
+
 
 
