@@ -20,15 +20,8 @@ function isActive(pathname: string, href: string) {
   return pathname.startsWith(href);
 }
 
-function NavLink({
-  item,
-  expanded,
-  active,
-}: {
-  item: NavItem;
-  expanded: boolean;
-  active: boolean;
-}) {
+// Update the NavLink function:
+function NavLink({ item, expanded, active }: { item: NavItem; expanded: boolean; active: boolean }) {
   const Icon = item.icon;
   return (
     <Link
@@ -36,26 +29,34 @@ function NavLink({
       aria-label={item.label}
       title={expanded ? undefined : item.label}
       className={cn(
-        'group relative flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-sm transition-colors duration-150',
+        'group relative flex items-center justify-between gap-3 rounded-lg px-2.5 py-2.5 text-sm transition-colors duration-150',
         active ? 'text-ink' : 'text-muted hover:bg-canvas/60 hover:text-ink',
       )}
     >
-      {active && (
-        <>
-          <span className="absolute inset-0 rounded-lg bg-canvas" />
-          <motion.span
-            layoutId="sidebar-active-glow"
-            className="absolute left-0 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-accent/30 blur-xl"
-            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-          />
-        </>
+      <div className="flex items-center gap-3">
+        {active && (
+          <>
+            <span className="absolute inset-0 rounded-lg bg-canvas" />
+            <motion.span
+              layoutId="sidebar-active-glow"
+              className="absolute left-0 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-accent/30 blur-xl"
+              transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+            />
+          </>
+        )}
+        <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
+          <Icon size={18} className={active ? 'text-accent' : undefined} />
+        </span>
+        {expanded && <span className="relative truncate">{item.label}</span>}
+      </div>
+
+      {/* NEW: Soon Badge */}
+      {expanded && item.comingSoon && (
+        <span className="relative rounded-full border border-border bg-surface px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-widest text-muted">
+          Soon
+        </span>
       )}
-      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
-        <Icon size={18} className={active ? 'text-accent' : undefined} />
-      </span>
-      {expanded && (
-        <span className="relative truncate">{item.label}</span>
-      )}
+
       {active && (
         <motion.span
           layoutId="sidebar-underline"

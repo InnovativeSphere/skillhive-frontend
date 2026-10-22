@@ -1,15 +1,28 @@
+'use client';
+
 import { BookOpen, Award, TrendingUp } from 'lucide-react';
 import { CountUp } from '@/components/ui/CountUp';
 import { useAuth } from '@/components/auth/AuthProvider';
-
-const stats = [
-  { label: 'Enrolled', to: 0, icon: BookOpen },
-  { label: 'Certificates', to: 0, icon: Award },
-  { label: 'Progress', to: 0, icon: TrendingUp, suffix: '%' },
-];
+import { useGetMyEnrollmentsQuery } from '@/lib/api/enrollments';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export function StudentDashboard() {
   const { user } = useAuth();
+  const { data: enrollments, isLoading } = useGetMyEnrollmentsQuery();
+
+  const totalEnrolled = enrollments?.length ?? 0;
+  const completed = enrollments?.filter((e) => e.status === 'COMPLETED').length ?? 0;
+  
+  // Calculate average progress across all active courses
+  const totalProgress = enrollments?.reduce((sum, e) => sum + e.progressPercentage, 0) ?? 0;
+  const avgProgress = totalEnrolled > 0 ? Math.round(totalProgress / totalEnrolled) : 0;
+
+  const stats = [
+    { label: 'Enrolled Courses', to: totalEnrolled, icon: BookOpen },
+    { label: 'Completed', to: completed, icon: Award },
+    { label: 'Avg Progress', to: avgProgress, icon: TrendingUp, suffix: '%' },
+  ];
+
   return (
     <div>
       <p className="font-mono text-xs uppercase tracking-widest text-muted">
@@ -21,26 +34,32 @@ export function StudentDashboard() {
       <p className="mt-4 max-w-xl text-muted">
         Pick up where you left off. Or explore something new.
       </p>
+
       <div className="mt-10 grid gap-3 md:grid-cols-3">
-        {stats.map((s) => {
-          const Icon = s.icon;
-          return (
-            <div key={s.label} className="rounded-xl border border-border bg-surface p-5 transition-all duration-150 hover:border-border-strong hover:shadow-card">
-              <div className="flex items-center gap-3">
-                <Icon size={16} className="text-accent" />
-                <span aria-hidden className="h-px flex-1 bg-border-strong" />
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-32 rounded-xl" />)
+        ) : (
+          stats.map((s) => {
+            const Icon = s.icon;
+            return (
+              <div key={s.label} className="rounded-xl border border-border bg-surface p-5 transition-all duration-150 hover:border-border-strong hover:shadow-card">
+                <div className="flex items-center gap-3">
+                  <Icon size={16} className="text-accent" />
+                  <span aria-hidden className="h-px flex-1 bg-border-strong" />
+                </div>
+                <p className="mt-4 font-mono text-[10px] uppercase tracking-widest text-muted">{s.label}</p>
+                <p className="mt-1 font-serif text-2xl font-medium tracking-tight text-ink">
+                  <CountUp to={s.to} />
+                  {s.suffix}
+                </p>
               </div>
-              <p className="mt-4 font-mono text-[10px] uppercase tracking-widest text-muted">{s.label}</p>
-              <p className="mt-1 font-serif text-2xl font-medium tracking-tight text-ink">
-                <CountUp to={s.to} />
-                {s.suffix}
-              </p>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
+
       <div className="mt-10 rounded-xl border border-dashed border-border-strong bg-surface/50 p-8 text-center">
-        <p className="text-sm text-muted">Course enrollment opens soon.</p>
+        <p className="text-sm text-muted">Certificate downloads and course recommendations coming soon.</p>
       </div>
     </div>
   );
